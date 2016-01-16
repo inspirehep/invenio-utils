@@ -221,7 +221,7 @@ class SmartDict(object):
                 >>> %timeit x = dd['a'][0]['b']
                 1000000 loops, best of 3: 598 ns per loop
         """
-        def getitem(k, v):
+        def getitem(k, v, first=True):
             if isinstance(v, dict):
                 return v[k]
             elif ']' in k:
@@ -234,11 +234,13 @@ class SmartDict(object):
                         lambda x: int(x.strip()) if x.strip() else None,
                         k.split(':')
                     ))]
+            elif not first:
+                raise KeyError
             else:
                 tmp = []
                 for inner_v in v:
                     try:
-                        tmp.append(getitem(k, inner_v))
+                        tmp.append(getitem(k, inner_v, first=False))
                     except KeyError:
                         continue
                 return tmp

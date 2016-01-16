@@ -238,6 +238,9 @@ class TestSmartDict(InvenioTestCase):
         d.set('a.b.c', ['foo'], False)
         self.assertEqual(d['a.b.c'], ['foo'])
 
+        d = SmartDict({'top': ['1', '2']})
+        self.assertEqual(d.get('top.doesnotexist'), [])
+
     def test_smart__contains(self):
         d = SmartDict()
 
