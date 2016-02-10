@@ -148,14 +148,13 @@ def convert_datetext_to_datestruct(datetext):
         return datestruct_default
 
 
-def convert_datestruct_to_dategui(datestruct, ln=None):
+def convert_datestruct_to_dategui(datestruct, ln=None, output_format="d MMM Y, H:mm"):
     """Convert: (2005, 11, 16, 15, 11, 44, 2, 320, 0) => '16 nov 2005, 15:11'
     Month is internationalized
     """
     assert ln is None, 'setting language is not supported'
     try:
         if datestruct[0] and datestruct[1] and datestruct[2]:
-            output_format = "d MMM Y, H:mm"
             dt = datetime.fromtimestamp(time.mktime(datestruct))
             return babel_format_datetime(dt, output_format)
         else:
